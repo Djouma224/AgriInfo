@@ -1,0 +1,97 @@
+Les differentes pour la base de donnée du projet AgriInfo224
+1 - Utilisateurs
+   - user_id
+   - photo_profile
+   - Nom
+   - Prénom
+   - Adresse e-mail
+   - Numéro de téléphone
+   - rôle (visiteur,agriculteur, bailleur, opérateur économique, administrateur)
+   - mot de passe (hashé)
+   - mot de passe confirm
+   
+2 - Commentaires
+   - Auteur du commentaire(clé etranger --- Utilisateurs)
+   - Date et heure du commentaire
+   - Contenu du commentaire(texte)
+   
+3 - Cultures
+   - nom
+   - images
+   - Type de culture (blé, maïs, fruits, légumes, etc.)
+   - Période de plantation
+   - Période de récolte prévue
+   - zone géographique propice
+   - description de la culture
+ 
+   
+4 - Ressources(audio visuels)
+   - titre de la ressource
+   - description de la ressource
+   - lien de téléchargement
+   - user_id (clé étrangère faisant référence à la table Utilisateurs)
+   - type(video,fichier,images,text...)
+
+5 - Notifications
+   - Type de notification (alerte météo, rappel de plantation, etc.)
+   - Destinataire(cle etrager utilisateur)
+   - Date et heure de la notification
+   - Contenu de la notification
+   
+6 - Catégorie Cultures
+    - nom de la catégorie
+
+7 - Actualités
+     - titre de l'actualité
+     - contenu de l'actualité
+     - date de publication
+     - media(images, videos)
+8 - Contactes(cas a gerer les utilisateurs connectés ou non)
+    - nom
+    - prenom
+    - tel
+    - sujet
+    - message
+    
+9 - Techniques de culture
+   - nom de la technique
+   - description de la technique
+   - media(video,images)
+
+10 - Endroits propices aux cultures
+     - lieu_id (clé primaire)
+     - nom de l'endroit
+     - description de l'endroit
+     - culture(s) propice(s)
+     * Localisation géographique(google maps option a envisagée)
+   
+*11 - Périodes des cultures(conflit avec la table culture)
+	periode_id (clé primaire)
+        culture_id (clé étrangère faisant référence à la table Cultures)
+        zone géographique
+        date de début
+        durée
+        - Calendrier de plantation
+   	- Calendrier de récolte
+12 - Forums de discussions
+        titre du forum
+        description du forum
+        date de création
+        user_id (clé étrangère faisant référence à la table Utilisateurs)
+
+13 - Messages du forum
+    - Auteur du message
+    - Date et heure du message
+    - Contenu du message
+    
+14 - Matériaux pour les cultures
+    - images
+    - nom du matériel
+    - description du matériel
+    - disponibilité
+    - prix
+    - lieu de vente
+    - quantité dispo
+    
+
+
