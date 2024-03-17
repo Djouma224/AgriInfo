@@ -1,0 +1,139 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modif_Profile</title>
+    <link rel="stylesheet" href="{% static 'Compte/css/style.css' %}">
+    <!-- Bootstrap core CSS -->
+	<link href="{% static 'Agronomie/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   
+	<!-- Fontawesome CSS -->
+	<link href="{% static 'Agronomie/css/all.css' %}" rel="stylesheet">
+    <!-- <script src="{% static 'Compte/js/cleave/jquery-3.6.4.js' %}" defer></script> -->
+    <!-- <script src="{% static 'Compte/js/validations.js' %}" defer></script> -->
+</head>
+<body>
+
+
+    <div id="">
+        <div>  
+
+            <div class="body pb-5">
+                {% if errors %}
+                    <div  class="alert alert-danger alert-dismissible fade show" style="position: absolute;margin-top: 15px; z-index: 1000;max-width: 330px;">            
+                        <em style="color: red; ">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            {{errors}}
+                        </em> 
+                    </div> 
+                {% endif %}
+                
+                <form id="form_content" action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                        
+                        <input type="file" name="profile_picture" id="id_profile_picture" accept="image/*" onchange="previewImage(this)" hidden>
+                        <img id="image_preview" src="{% static 'Compte/img/prog.png' %}" alt="" class="img" style="width: 150px;height: 150px;">
+                        <div class="content_m">
+                            <div style=" padding-top: 70px; display: flex; justify-content: center; border-bottom: solid 2px white; padding-bottom: 10px;">
+                                <i class="fa fa-camera" style="font-size: 30px;color: white;" id="image_upload_label"></i>
+                            </div>
+                            
+                            <div class="center_input mt-4">
+                                
+                                <input style="background: none; color: white;" class="form-control mb-1" type="text" placeholder=" Nom utilisateur" name="username" required>
+            
+                                
+                                <input style="background: none; color: white;" class="form-control mb-1" type="text" placeholder="Nom et Prenom" name="nom_prenom" required>
+            
+                                
+                                <input style="background: none; color: white;" class="form-control mb-1" id="phone" type="text" placeholder="Telephone" name="phone" required>
+            
+                            
+                                <input style="background: none; color: white;" class="form-control mb-1" type="email" placeholder="Email" name="email" required>                           
+                            
+                                <input style="background: none; color: white;" class="form-control mb-1" id="pwd" type="password" placeholder="Votre mot de passe" name="password" required>
+                            
+                                <input style="background: none; color: white;" class="form-control mb-1" id="pwd_confirm" type="password" placeholder="confirmer votre mot de passe" name="password2" required>
+                                <select style="background: none; color: white;" class="form-control mb-1" name="role" id="" style="border: none; border-radius: 5px;">
+                                    <optgroup label="Role">
+                                        <option value="0" selected>Utilisateur</option>
+                                        <option value="1">Agriculteur</option>
+                                    </optgroup>
+                                </select>
+                        
+                            <div class="text-center ">
+                                    <!-- <button><a href="" id="">Retour</a></button> -->
+                                    <a href="" class="btn btn-primary text-white">Retour</a>
+                                    <button class="btn btn-success mr-3" id="enregistrer" style="color: white;font-weight: bold;">Créer</button>  
+                            </div>
+                            <div style="padding-bottom: 15px;padding-left: 10px;">
+                                <a href="{% url 'login' %}">se connecter</a>
+                            </div>
+                        
+                        </div>
+                    </div>
+                    
+                </form>
+        
+            </div>
+        </div>
+   </div>
+    
+
+    <script src="{% static 'Compte/js/cleave/cleave.js' %}"></script>   
+    <script src="{% static 'Compte/js/cleave/cleave-phone.gn.js' %}"></script>
+
+
+    <script>
+        //cacher le champ de saisie du fichier qui permet de choisir l'image
+        document.getElementById('id_profile_picture').style.display = 'none';
+        // selectionner l'image en cliquant sur la phrase profile.
+        document.getElementById('image_upload_label').addEventListener('click',function () {
+            document.getElementById('id_profile_picture').click();
+        });
+        //selectionner l'image en cliquant sur l'image de profile
+        document.getElementById('image_preview').addEventListener('click',function () {
+            document.getElementById('id_profile_picture').click();
+        });
+
+        function previewImage(input) {
+            var preview = document.getElementById('image_preview');
+             // recupère le premier fichier selectionner par l'utilisateur
+            var file =input.files[0];
+            // créer un objet FileReader pour lire le contenu du fichier
+            var reader = new FileReader();
+            // ecrire un fonction a exécuter une fois la lecture terminée
+            reader.onloadend = function() {
+            // mettre a jour l'attribut src de l'element imag avec avec l'URL de l'image lue
+                preview.src = reader.result;
+                // preview.display = 'block';
+            };
+            // verifie si un fichier a été selectionner
+            if (file) {
+                // le contenu du fichier en tant que Data Url
+                reader.readAsDataURL(file);
+            
+            };
+        }
+
+
+
+
+
+    // code de cleave.js pour gérer le numero de téléphone
+            var cleave = new Cleave('#phone',{
+        phone:true,
+        phoneRegionCode:'GN'
+    });
+        
+        </script>
+    
+
+
+    <script src="{% static 'Agronomie/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'Agronomie/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    </body>
+</html>

@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SingUp</title>
+    <link rel="stylesheet" href="{% static 'Compte/css/style.css' %}">
+    <!-- Bootstrap core CSS -->
+	<link href="{% static 'Agronomie/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+   
+	<!-- Fontawesome CSS -->
+	<link href="{% static 'Agronomie/css/all.css' %}" rel="stylesheet">
+    <!-- <script src="{% static 'Compte/js/validations.js' %}" defer></script> -->
+</head>
+<body>
+    
+    <!-- <div style="display: flex; justify-content: center;">
+        {% if errors %}
+        <p style="color: red;">{{errors}}</p>
+        {% endif %}
+    </div> -->
+
+    <form id="form_content" action="" novalidate method="post">
+        {% csrf_token %}
+        <div class="body">
+            {% if errors %}
+            <div  class="alert alert-danger alert-dismissible fade show" style="position: absolute;margin-top: 15px; z-index: 1000;max-width: 330px;">            
+                <em style="color: red; ">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{errors}}
+                </em> 
+            </div> 
+        {% endif %}
+            <div class="content_m">
+                <div style="display: flex; justify-content: center;">
+                    <h3 style="height: 50px;font-size: 1.5rem;display: flex;align-items: center; border-bottom: solid 3px #35a42d;" class="h3 text-white" >Connectez-vous</h3>
+                </div>
+                <div class="text-center">
+                    <em class="text-white">se connecter avec</em>
+                </div>
+
+                <div class="connexion">
+                    <ul class="d-flex justify-content-around p-0 m-3">
+                        <a href=""><li><i class="fab fa-google"></i></li></a>
+                        <a href=""><li><i class="fab fa-facebook-f"></i></li></a>
+                        <a href=""><li><i class="fab fa-whatsapp"></i></li></a>
+                    </ul>
+                </div>
+
+                <hr>
+                
+                <div class="form">
+                    <label style="color:  #35a42d;" for="">Nom Utilisateur</label>
+                    <input style="background: none; color: white;" class="form-control mb-2"  id="nombre" type="text" placeholder="Nom Utilisateur" name="username" required>
+                </div>
+                
+                <div class="form">
+                    <label style="color:  #35a42d;" for="password">Mot de passe</label>
+                    <input  style="background: none; color: white;" class="form-control" type="password" placeholder="Mot de passe" name="password" required>           
+                </div>
+
+                <div class="text-center">
+                    <a class="btn btn-primary" id="lien" href="">Retour</a>
+                    <button class="btn btn-success" type="submit" id="enregistrer" style="color: white;font-weight: bold;">Se connecter</button>  
+                </div>
+                <div style="padding-left: 10px;">
+                    <em><a href="{% url 'signup' %}">Créer un compte</a></em>
+                </div>
+
+                <div style="padding-bottom: 15px;padding-left: 10px;">
+                    <em><a href="{% url 'password_reset' %}">mot de passe oublier ?</a></em>
+                </div>
+            </div>
+        </div>
+        
+    </form>
+
+    <i class="fa fa-user"></i>
+    <i class="fa fa-cog"></i>
+    <i class="fa fa-power-off"></i>
+    
+
+
+   
+    <script src="{% static 'Agronomie/vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'Agronomie/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'Compte/js/cleave/cleave.js' %}"></script>   
+    <script src="{% static 'Compte/js/cleave/cleave-phone.gn.js' %}"></script>
+</body>
+</html>

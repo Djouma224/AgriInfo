@@ -1,0 +1,48 @@
+{% load static %}
+{% include "Agronomie/header.html" %}
+	
+	<!-- full Title -->
+	<div class="full-title">
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<h1 class="mt-4 mb-3">Portfolio 2
+				<small>Subheading</small>
+			</h1>
+		</div>
+	</div>
+
+    <!-- Page Content -->
+    <div class="container">
+		<div class="breadcrumb-main">
+		
+	  </div>
+
+    <center>
+      <div class="mt-5">
+        <h3>Actuces pour les techniques de culture</h3>
+      </div>
+    </center>
+
+      <div class="row mt-5">
+        {% for techniques in technique  %}
+        <div class="col-lg-6 portfolio-item">
+          <div class="card h-100">
+            <video  src="{{techniques.video.url}}" controls poster="{{techniques.image.url}}" ></video>
+            <div class="card-body">
+              <h4 class="card-title">
+                <p>{{techniques.nom_technique}}</p>
+              </h4>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+      </div>
+      <!-- /.row -->
+
+	
+    </div>
+    <!-- /.container -->
+
+   {% include "Agronomie/footer.html" %}

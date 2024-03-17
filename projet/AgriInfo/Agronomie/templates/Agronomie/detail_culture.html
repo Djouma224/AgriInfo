@@ -1,0 +1,53 @@
+{% load static %}
+{% include "Agronomie/header.html" %}
+	
+	<!-- full Title -->
+	<div class="full-title">
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<h1 class="mt-4 mb-3">Portfolio 1
+				<small>Subheading</small>
+			</h1>
+		</div>
+	</div>
+
+    <!-- Page Content -->
+    <div class="container">
+		<div class="breadcrumb-main">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="index.html">Home</a>
+				</li>
+				<li class="breadcrumb-item active">Portfolio 1</li>
+			</ol>
+		</div>
+	<div class="project-inner">
+		<!-- Project One -->
+		<div class="row">
+			<div class="col-md-6">
+				<a href="#">
+					<img class="img-fluid rounded mb-3 mb-md-0" src="{{detail.image.url}}" alt="" />
+				</a>
+			</div>
+			<div class="col-md-6">
+				<h3>{{detail.nom_culture}}</h3>
+				<p>{{detail.description_culture}}</p>
+				<br><br><br><br><br><br>
+				
+				<a class="btn btn-primary" href="{% url 'culture' %}">Retour
+					<span class="glyphicon glyphicon-chevron-right"></span>
+				</a>
+			</div>
+		</div>
+		<!-- /.row -->
+	</div>
+    <hr>
+	
+	
+	
+
+    </div>
+    <!-- /.container -->
+
+    <!--footer starts from here-->
+   {% include "Agronomie/footer.html" %}

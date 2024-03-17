@@ -1,0 +1,139 @@
+{% load static %}
+{% include "Agronomie/header.html" %}
+	
+	<!-- full Title -->
+	<div class="full-title">
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<h1 class="mt-4 mb-3">Les types de culture
+				<small>Subheading</small>
+			</h1>
+		</div>
+	</div>
+
+    <!-- Page Content -->
+  
+       {% for categories in categorie  %}
+    <center>
+      <div class="mt-4">
+        <h3>{{categories.nom_categorie}}</h3>
+      </div>
+     </center>
+    <div class="row">
+      {% for culture in categories.culture_set.all %}
+      <div class="col-lg-4 col-sm-6 portfolio-item">
+        <div class="card h-100">
+          <a href="#"><img class="card-img-top" src="{{culture.image.url}}" alt="" /></a>
+          <div class="card-body">
+            <h4 class="card-title">
+              <a href="#">{{culture.nom_culture}}</a>
+            </h4>
+            <p class="card-text">{{culture.description_culture |truncatewords:15}}</p>
+           <a class="btn btn-success sm" href="{% url 'detail_culture' culture.id %}">voir plus</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+       {% comment %} <center>
+        <div class="mt-4">
+          <h3>Voici les Céreales disponibles</h3>
+        </div>
+       </center>
+      <div class="row">
+        {% for culture_cereals in culture_cereal %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{culture_cereals.image.url}}" alt="" /></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">{{culture_cereals.nom_culture}}</a>
+              </h4>
+              <p class="card-text">{{culture_cereals.description_culture |truncatewords:15}}</p>
+              <a class="btn btn-success sm" href="{% url 'detail_culture' culture_cereals.id %}">voir plus</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+   
+      <center>
+        <div>
+          <h2>Voici les Tubercules disponibles</h2>
+        </div>
+       </center>
+      <div class="row">
+        {% for culture_cereals in culture_tubercule %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{culture_cereals.image.url}}" alt="" /></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">{{culture_cereals.nom_culture}}</a>
+              </h4>
+              <p class="card-text">{{culture_cereals.description_culture |truncatewords:15}}</p>
+              <a class="btn btn-success sm" href="">voir plus</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <center>
+        <div>
+          <h2>Voici les Légumes disponibles</h2>
+        </div>
+       </center>
+      <div class="row">
+        {% for culture_cereals in culture_legume %}
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100">
+            <a href="#"><img class="card-img-top" src="{{culture_cereals.image.url}}" alt="" /></a>
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">{{culture_cereals.nom_culture}}</a>
+              </h4>
+         
+                  <p class="card-text mr-3">{{culture_cereals.description_culture}}</p>
+                  <a class="btn btn-success sm" href="">voir plus</a>
+             
+            </div>
+          </div>
+        </div>
+        {% endfor %} {% endcomment %}
+      </div>
+
+      
+		{% comment %} <div class="pagination_bar">
+			<!-- Pagination -->
+			<ul class="pagination justify-content-center">
+				<li class="page-item">
+				  <a class="page-link" href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+					<span class="sr-only">Previous</span>
+				  </a>
+				</li>
+				<li class="page-item">
+				  <a class="page-link" href="#">1</a>
+				</li>
+				<li class="page-item">
+				  <a class="page-link" href="#">2</a>
+				</li>
+				<li class="page-item">
+				  <a class="page-link" href="#">3</a>
+				</li>
+				<li class="page-item">
+				  <a class="page-link" href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+					<span class="sr-only">Next</span>
+				  </a>
+				</li>
+			</ul>
+		</div> {% endcomment %}
+
+    </div>
+    <!-- /.container -->
+
+    <!--footer starts from here-->
+   {% include "Agronomie/footer.html" %}

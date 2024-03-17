@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 class Utilisateur(AbstractUser):
+    token = models.CharField(max_length=120)
     role=[
         ("agriculteur","agriculteur"),
         ("admin","admin"),

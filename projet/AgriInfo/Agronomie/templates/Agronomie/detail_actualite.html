@@ -37,21 +37,21 @@
 					<h3>{{detail.titre}}</h3>
 					<p>{{detail.contenu}}</p>
 					
-					<a class="btn btn-primary" href="{% url 'actualite' %}">Retour
+					<a class="btn btn-primary mb-3" href="{% url 'actualite' %}">Retour
 						<span class="glyphicon glyphicon-chevron-right"></span>
 					</a>
 				</div>
 			</div>
 			<!-- /.row -->
 		</div>
-	</div>
+	 </div>
 
 
 
    
 	
 
-		<div class="pagination_bar">
+		{% comment %} <div class="pagination_bar">
 			<!-- Pagination -->
 			<ul class="pagination justify-content-center">
 				<li class="page-item">
@@ -76,7 +76,7 @@
 				  </a>
 				</li>
 			</ul>
-		</div>
+		</div> {% endcomment %}
     </div>
     <!-- /.container -->
 

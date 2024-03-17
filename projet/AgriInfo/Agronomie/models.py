@@ -30,7 +30,8 @@ class Endroit_propice(models.Model):
 class Technique_culture(models.Model):
     nom_technique=models.CharField(max_length=50)
     description_technique=models.TextField()
-    media=models.FileField()
+    video=models.FileField()
+    image=models.ImageField(upload_to='technque',blank=True,null=True)
     categorie_culture=models.ForeignKey(Categorie_culture,on_delete=models.CASCADE)
 
     def __str__(self):
