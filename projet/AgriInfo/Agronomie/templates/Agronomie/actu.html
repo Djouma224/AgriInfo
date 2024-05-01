@@ -1,43 +1,199 @@
+
+{% extends 'Agronomie/base.html' %}
 {% load static %}
-{% include 'Agronomie/header.html' %}
+{% block title %} Actualites{% endblock  %}
+
+{% block navbar %}
+<ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link active" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="services.html">Forums</a>
+   </li>
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+{% endblock  %}
+
+{% block content %}
+	<!-- full Tit
 	
 	<!-- full Title -->
 	<div class="full-title">
 		<div class="container">
 			<!-- Page Heading/Breadcrumbs -->
-			<h1 class="mt-4 mb-3">Blog Home One
-				<small>Subheading</small>
+			<h1 class="mt-4 mb-3">Guinée
+				<small>Conakry</small>
 			</h1>
 		</div>
 	</div>
 
     <!-- Page Content -->
     <div class="container">
-		<div class="breadcrumb-main">
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item">
-					<a href="index.html">Home</a>
-				</li>
-				<li class="breadcrumb-item active">Blog Home 1</li>
-			</ol>
-		</div>
+		
 
 		<div class="row">
 			<!-- Blog Entries Column -->
-			<div class="col-md-8 blog-entries">
+			<div class="col-md-8 offset-md-2 blog-entries">
+				<!--  start publication -->
+				<center>
+					<div class="breadcrumb-main mt-3 shadow">
+					  <div class="breadcrumb d-flex justify-content-end text-white">
+						<i class="fa fa-bell mx-4" style="font-size: 30px;"> <span class="badge bg-primary"
+							 style="font-size: 15px; position: absolute; top: 18px; right: 125px; border-radius: 50%; border: none;">1</span></i>
+							 {% if user.is_authenticated %}
+						<button class="btn btn-ligth" data-toggle="modal" data-target="#Modal">Publier</button>
+						{% else %}
+						<!-- <a href="{% url "login" %}" class="btn btn-ligth" style="background-color: white; color: black;" data-toggle="modal" data-target="#Modal">Publier</a> -->
+						<button type="submit" class="btn btn-ligth" data-toggle="modal" data-target="#Modal"style="background-color: white; color: black;" >Publier</button>
+
+						<!-- modal de confirmation pub anonumous user -->
+
+						<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							<div class="modal-dialog modal-dialog-centered">
+							  <div class="modal-content">
+									<div class="modal-header">
+										<!-- <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Confirmation</h5> -->
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<p style="color: black ;">Pour publier veillez vous connecter</p>
+									</div>
+									<div class="modal-footer d-flex justify-content-center">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+										<a href="{% url "login" %}" class="btn btn-success">Se connecter</a>
+									</div>
+							  </div>
+							</div>
+						</div>
+
+						<!-- end modal de confirmation pub anonumous user -->
+
+						{% endif %}
+					  </div>
+					</div>
+				   </center>
+                   {% if info %}
+            <div  class="alert alert-success alert-dismissible fade show" style="position: absolute;margin-top: 15px; z-index: 1000;max-width: 330px;">            
+                <em>
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{info}}
+                </em> 
+            </div> 
+            {% endif %}
+
+				<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered">
+					  <div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">publication</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+							<form action="" method="post" enctype="multipart/form-data">
+								{% csrf_token %}
+
+								<input class="form-control mb-3" type="text" placeholder="Titre de publication" name="titre">
+								<textarea class="form-control mb-3" name="contenue" id="" cols="15" rows="5" placeholder="Saisisser le text de votre publication ici ..."></textarea>
+								<div>
+									<label for="">choisir une image</label>
+									<input class="form-control" type="file" placeholder="choisir" name="image">
+								</div>
+								<div class="modal-footer d-flex justify-content-center">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+									<button type="submit" class="btn btn-success">Publier</button>
+								</div>
+							</form>
+							</div>
+							
+					  </div>
+					</div>
+				</div>
+				<!-- end publication -->
 			  <!-- Blog Post -->
 			  {% for actus in actualite %}
-			  <div class="mt-4 d-flex mb-3" style="align-items: center;background-color: #4e391467;">
-				<div>
-					<img class="img-fluid mr-2" src="{{actus.auteur.profile.url}}" alt="" style="width: 50px; height: 50px; border-radius: 150px;">
-				</div>
-				<div>
-					<strong>{{actus.auteur.username}}</strong><em> | {{actus.auteur.roles}}</em>
-					<div><small>{{actus.date_pub}}</small></div>
-				</div>
-				
-			</div>
+			  
 			  <div class="card mb-4">
+				<div class="card-header">
+					<div class="d-flex" style="align-items: center;">
+						<div>
+							<img class="img-fluid mr-2" src="{{actus.auteur.profile.url}}" alt="" style="width: 50px; height: 50px; border-radius: 150px; border: 1px solid black;">
+						</div>
+						<div>
+							<strong>{{actus.auteur.username}}</strong><em> | {{actus.auteur.roles}}</em>
+							<div><small>{{actus.date_pub}}</small></div>
+						</div>
+					
+					</div>
+				</div>
 					<div class="d-flex justify-content-center">
 						<img style="min-width: 50%; max-height: 50%;" class="img-fluid" src="{{actus.media.url}}" alt="Card image Blog" />
 					</div>
@@ -47,12 +203,11 @@
 					<div class="card-body">
 					<h2 class="card-title">{{actus.titre}}</h2>
 					<p class="card-text">{{actus.contenu|truncatewords:40}}</p>
-					<a href="#" class="btn btn-primary">lire plus &rarr;</a>
+					
+					<a href="{% url 'detail_actualite' actus.id %}" class="btn btn-primary">lire plus &rarr;</a>
+			
 					</div>
-					<div class="card-footer text-muted">
-					Posted on January 1, 2018 by
-					<a href="#">N & LW Lawn Care</a>
-					</div>
+					
 			  </div>
 			  {% endfor %}
 
@@ -73,65 +228,7 @@
 			</div>
 
 			<!-- Sidebar Widgets Column -->
-			<div class="col-md-4 blog-right-side">
-
-			  <!-- Search Widget -->
-			  <div class="card mb-4">
-				<h5 class="card-header">Search</h5>
-				<div class="card-body">
-				  <div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for...">
-					<span class="input-group-btn">
-					  <button class="btn btn-secondary" type="button">Go!</button>
-					</span>
-				  </div>
-				</div>
-			  </div>
-
-			  <!-- Categories Widget -->
-			  <div class="card my-4">
-				<h5 class="card-header">Categories</h5>
-				<div class="card-body">
-				  <div class="row">
-					<div class="col-lg-6">
-					  <ul class="list-unstyled mb-0">
-						<li>
-						  <a href="#">Web Design</a>
-						</li>
-						<li>
-						  <a href="#">HTML</a>
-						</li>
-						<li>
-						  <a href="#">Freebies</a>
-						</li>
-					  </ul>
-					</div>
-					<div class="col-lg-6">
-					  <ul class="list-unstyled mb-0">
-						<li>
-						  <a href="#">JavaScript</a>
-						</li>
-						<li>
-						  <a href="#">CSS</a>
-						</li>
-						<li>
-						  <a href="#">Tutorials</a>
-						</li>
-					  </ul>
-					</div>
-				  </div>
-				</div>
-			  </div>
-
-			  <!-- Side Widget -->
-			  <div class="card my-4">
-				<h5 class="card-header">Side Widget</h5>
-				<div class="card-body">
-				  You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
-				</div>
-			  </div>
-
-			</div>
+			
 
 		</div>
 		<!-- /.row -->
@@ -140,5 +237,4 @@
     <!-- /.container -->
 
     <!--footer starts from here-->
- 
-{% include 'Agronomie/footer.html' %}
+{% endblock  %}

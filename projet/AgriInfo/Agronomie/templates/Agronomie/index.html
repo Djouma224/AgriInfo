@@ -1,5 +1,86 @@
+{% extends "Agronomie/base.html" %}
 {% load static %}
-{% include "Agronomie/header.html" %}
+{% block title %} Agriculture{% endblock  %}
+
+{% block navbar %}
+	
+<ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link active" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="services.html">Forums</a>
+   </li>
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+
+{% endblock  %}
+	<!-- full Title -->
+	{% block content %}
 
 <header class="slider-main">
    <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-ride="carousel">
@@ -10,24 +91,24 @@
        </ol>
        <div class="carousel-inner" role="listbox">
           <!-- Slide One - Set the background image for this slide in the line below -->
-          <div class="carousel-item active" style="background-image: url('{% static 'Agronomie/images/slider-01.jpg' %}')">
+          <div class="carousel-item active" style="background-image: url('{% static 'Agronomie/images/riz.jpg' %}')">
              <div class="carousel-caption d-none d-md-block">
-                <h3>Welcome to N & LW Lawn Care</h3>
-                <p>A Great Theme For Garden Lawn Care</p>
+                <h3>" Celui qui sème avec abondance récoltera avec abondance." </h3>
+                <p>" L'agriculture est l'art de transformer le soleil, la pluie et le sol en richesse. "</p>
              </div>
           </div>
           <!-- Slide Two - Set the background image for this slide in the line below -->
-          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/slider-02.jpg' %}')">
+          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/riz2.jpg' %}')">
              <div class="carousel-caption d-none d-md-block">
-                <h3>Beautiful Garden</h3>
-                <p>A Great Theme For Garden Lawn Care</p>
+                <h3>" L'agriculture est une entreprise où l'on sème le temps pour récolter l'avenir."</h3>
+                <p>" L'agriculture n'est pas seulement le métier qui donne le pain, c'est aussi le métier qui donne l'espoir. "</p>
              </div>
           </div>
           <!-- Slide Three - Set the background image for this slide in the line below -->
           <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/slider-03.jpg' %}')">
              <div class="carousel-caption d-none d-md-block">
-                <h3>Welcome to N & LW Lawn Care</h3>
-                <p>A Great Theme For Garden Lawn Care</p>
+                <h3>" L'agriculture est notre passeport pour l'avenir, car la nourriture est l'unité fondamentale de la vie. "</h3>
+                <p>" La terre est le grand livre de l'humanité, l'agriculture en est la lecture. "</p>
              </div>
           </div>
        </div>
@@ -43,10 +124,117 @@
 </header>
     <!-- Page Content -->
     <div class="container">
-        <div class="services-bar">
-            <h1 class="my-4">Our Best Services </h1>
+        <div class="services-bar mt-3">
+            <div class="breadcrumb-main">
+            <ol class="breadcrumb">
+               <h1>C'est quoi l'agriculture ? </h1>
+            </div>
+            <p>l'agriculture est un pilier fondamental de l'économie, de la société et de l'environnement d'une nation, avec des implications vastes et profondes pour la vie des individus, la stabilité économique et la durabilité à long terme
+               Sécurité alimentaire :
+               L'agriculture fournit la base de l'alimentation humaine en produisant des céréales, des fruits, des légumes, des viandes et d'autres produits alimentaires essentiels.
+               Une nation capable de produire une grande partie de sa propre nourriture est mieux préparée pour faire face aux fluctuations des marchés mondiaux et aux perturbations des chaînes d'approvisionnement.
+               <img src="{% static "Agronomie/images/ananas.jpg" %}" alt="" class="img-fluid" style="max-width: 400px; float: left; margin: 15px; border-radius: 15px;">
+           Économie nationale :
+               L'agriculture est un contributeur majeur au produit intérieur brut (PIB) de nombreux pays, en particulier dans les économies en développement où elle constitue souvent le principal secteur économique.
+               Elle fournit des emplois directs et indirects à des millions de personnes, y compris des agriculteurs, des travailleurs agricoles, des transformateurs alimentaires, des distributeurs et des commerçants.
+       
+           Commerce international :
+               De nombreux pays dépendent des exportations agricoles pour générer des revenus et maintenir des échanges commerciaux favorables.
+               L'agriculture peut stimuler la croissance économique en favorisant les exportations de produits agricoles, renforçant ainsi la balance commerciale.
+       
+           Développement rural :
+               L'agriculture est souvent la principale activité économique dans les zones rurales, contribuant à maintenir la population locale et à freiner l'exode rural vers les villes.
+               Elle soutient la création d'infrastructures rurales telles que les routes, les écoles et les centres de santé, contribuant ainsi au développement global des régions rurales.
+       
+           Gestion des ressources naturelles :
+               Les pratiques agricoles durables, telles que la conservation des sols, la gestion de l'eau et la protection de la biodiversité, sont essentielles pour maintenir la productivité des terres agricoles à long terme.
+               L'agriculture durable aide à prévenir la dégradation des terres et à préserver les écosystèmes naturels, ce qui est crucial pour la santé environnementale et la résilience aux changements climatiques.
+       
+           Culture et identité nationale :
+               L'agriculture est souvent étroitement liée à l'identité culturelle et historique d'une nation, jouant un rôle essentiel dans les traditions, les festivals et les pratiques culinaires.
+               Elle contribue à façonner l'identité nationale à travers les produits alimentaires locaux, les paysages agricoles et les modes de vie ruraux.
+            </p>
+            <!-- l'importance de l'agriculture dans le developpement socio-econimque -->
+            <div class="breadcrumb-main">
+               <ol class="breadcrumb">
+                 
+                  <h1>La place de l'agriculture dans le développement socio-economique d'une nation </h1>
+               </ol>
+               <h5>L'agriculture joue un rôle crucial dans le développement socio-économique d'une nation pour plusieurs raisons :</h5>
+               <ul type="square" >
+                  <li>
+                     Sécurité alimentaire : L'agriculture fournit les aliments de base nécessaires à la population. En assurant une production alimentaire adéquate, elle contribue à réduire la faim et à garantir la sécurité alimentaire de la population.
+                  </li>
+                  <li>
+                     Emplois : L'agriculture est souvent le principal employeur dans les pays en développement. Elle offre des opportunités d'emploi dans les zones rurales, réduisant ainsi le chômage et la migration vers les zones urbaines.
+                  </li>
+                  <img src="{% static "Agronomie/images/ananas.jpg" %}" alt="" class="img-fluid" style="max-width: 400px; float: right; margin: 15px; border-radius: 15px;">
+
+                  <li>
+                     Piliers économiques : L'agriculture est un pilier économique important, contribuant au PIB d'un pays. Elle fournit des matières premières pour diverses industries telles que l'agroalimentaire, la textile et la pharmacie.
+                  </li>
+                  <li>
+                     Réduction de la pauvreté : En créant des emplois et en générant des revenus, l'agriculture contribue à réduire la pauvreté en fournissant aux agriculteurs et à leur communauté des moyens de subsistance durables.
+                  </li>
+                  <li>
+                     Développement rural : L'agriculture est essentielle au développement des zones rurales en stimulant l'investissement dans les infrastructures, en améliorant l'accès aux services de base tels que l'éducation et la santé, et en renforçant les capacités des communautés locales.
+                  </li>
+                  <li>
+                     Exportations et commerce : Les produits agricoles peuvent être exportés, ce qui contribue aux recettes d'exportation et favorise le commerce international. Une agriculture prospère peut améliorer la balance commerciale d'un pays.
+                  </li>
+                  <li>
+                     Soutien à l'environnement : Une agriculture durable peut favoriser la préservation de l'environnement en promouvant des pratiques agricoles respectueuses de l'écosystème, telles que la conservation des sols, la gestion de l'eau et la protection de la biodiversité.
+                  </li>
+
+               </ul>
+            </div>
+           
+
+            <div class="breadcrumb-main">
+               <ol class="breadcrumb">
+                 
+                  <h1>les defis les plus courants rencontrés par les agriculteurs</h1>
+               </ol>
+               <h5>Les agriculteurs rencontrent divers défis dans leurs activités, qui peuvent varier en fonction de la région, du type de cultures, de l'environnement et de nombreux autres facteurs. Voici quelques-uns des défis les plus courants rencontrés par les agriculteurs :</h5>
+               <ul type="square" >
+                  <li>
+                     Conditions Climatiques et Changements Climatiques:     Les phénomènes météorologiques extrêmes, comme les sécheresses, les inondations ou les tempêtes, peuvent affecter sérieusement les cultures et les récoltes.
+                     Le changement climatique entraîne des variations de température et des saisons moins prévisibles, compliquant la planification agricole.
+                  </li>
+                  <li> Accès à la Technologie et à l'Information :    
+                     L'adoption de technologies agricoles modernes peut nécessiter des investissements importants et des compétences techniques.
+                     Les agriculteurs doivent être informés des dernières techniques agricoles et des pratiques durables.
+                  </li>
+                  <img src="{% static "Agronomie/images/riz4.jpg" %}" alt="" class="img-fluid" style="max-width: 400px; float: right; margin: 15px; border-radius: 15px;">
+
+                  <li>
+                     Lutte contre les Parasites et les Maladies:     Les parasites et les maladies des plantes peuvent détruire des cultures entières. Les agriculteurs doivent trouver des moyens efficaces pour les contrôler sans endommager l'environnement.
+                     L'utilisation excessive de pesticides peut entraîner des résistances et des effets secondaires indésirables.
+                  </li>
+                  <li>
+                     Accès au Marché et Concurrence: Les agriculteurs doivent trouver des débouchés pour vendre leurs produits. Les marchés locaux peuvent être limités, et la concurrence peut être rude.
+                     Les agriculteurs peuvent avoir du mal à obtenir un prix équitable pour leurs produits, en raison de l'influence des grandes entreprises ou des chaînes de distribution.
+                  </li>
+                  <li>
+                     Coûts de Production :    Les coûts de production, tels que les semences, les engrais, le carburant et les équipements, peuvent être élevés, réduisant les marges bénéficiaires des agriculteurs.
+                     Les fluctuations des prix des matières premières peuvent affecter la rentabilité des exploitations agricoles.
+                  </li>
+                  <li>
+                     Santé et Sécurité au Travail:Les agriculteurs sont exposés à des risques liés à l'utilisation de machines, de produits chimiques et à des conditions de travail exigeantes.
+                     La santé et la sécurité des travailleurs agricoles sont des préoccupations importantes.
+                  </li>
+                  <li>
+                     Durabilité et Impact Environnemental :     Les agriculteurs doivent trouver des moyens de rendre leurs opérations durables et respectueuses de l'environnement.
+                     Les pratiques agricoles non durables peuvent avoir des effets néfastes sur le sol, l'eau et la biodiversité.
+                  </li>
+
+               </ul>
+            </div>
+
+
+            {% comment %} <h1 class="my-4">Our Best Services </h1> {% endcomment %}
             <!-- Services Section -->
-            <div class="row">
+            {% comment %} <div class="row">
                <div class="col-lg-4 mb-4">
                   <div class="card h-100">
                      <h4 class="card-header">Garden Fence</h4>
@@ -89,11 +277,11 @@
                      </div>
                   </div>
                </div>
-            </div>
+            </div> {% endcomment %}
             <!-- /.row -->
         </div>
         <!-- About Section -->
-        <div class="about-main">
+        {% comment %} <div class="about-main">
             <div class="row">
                <div class="col-lg-6">
                   <h2>Welcome to N & LW Lawn Care</h2>
@@ -113,9 +301,9 @@
                </div>
             </div>
             <!-- /.row -->
-        </div>
+        </div> {% endcomment %}
         <!-- Portfolio Section -->
-        <div class="portfolio-main">
+        {% comment %} <div class="portfolio-main">
             <h2>Our Portfolio</h2>
             <div class="row">
                <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -220,10 +408,10 @@
             <div class="col-md-4">
                <a class="btn btn-lg btn-secondary btn-block" href="#">Get In Touch Now</a>
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 
     <!-- /.container -->
     <!--footer starts from here-->
-    {% include "Agronomie/footer.html" %}
+    {% endblock %}   
     

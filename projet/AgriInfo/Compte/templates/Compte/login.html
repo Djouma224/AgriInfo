@@ -1,4 +1,5 @@
 {% load static %}
+{% load socialaccount %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,8 +43,8 @@
 
                 <div class="connexion">
                     <ul class="d-flex justify-content-around p-0 m-3">
-                        <a href=""><li><i class="fab fa-google"></i></li></a>
-                        <a href=""><li><i class="fab fa-facebook-f"></i></li></a>
+                        <a href="{% provider_login_url 'google' %}"><li><i class="fab fa-google"></i></li></a>
+                        <a href="{% provider_login_url 'facebook' %}"><li><i class="fab fa-facebook-f"></i></li></a>
                         <a href=""><li><i class="fab fa-whatsapp"></i></li></a>
                     </ul>
                 </div>

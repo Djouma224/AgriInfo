@@ -1,0 +1,224 @@
+
+
+{% extends 'Agronomie/base.html' %}
+{% load static %}
+{% block title %}calendrier{% endblock  %}
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="services.html">Forums</a>
+   </li>
+	
+	<li class="nav-item">
+	  <a class="nav-link active" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+{% endblock  %}
+	<!-- full Title -->
+	{% block content %}
+	<div class="full-title">
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<h1 class="mt-4 mb-3">About
+				<small>Subheading</small>
+			</h1>
+		</div>
+	</div>
+    <!-- Page Content -->
+    <div class="container">
+		<div class="breadcrumb-main m-3">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					
+				</li>
+				
+			</ol>
+		</div>
+		<!-- About Content -->
+		<div class="about-main">
+			<div class="row">
+				<div class="col-lg-6">
+					<img class="img-fluid rounded mb-4" src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" />
+				</div>
+				<div class="col-lg-6">
+					<h2>A propos d'AgriInfo224</h2>
+					<p>
+						<p>
+							AgriInfo224 est une plateforme en ligne dédiée à l'agriculture, visant à fournir des informations
+							complètes, fiables et à jour sur divers sujets liés au monde agricole.
+						</p>
+						<p>
+							Notre objectif est de servir
+							comme une ressource précieuse pour les agriculteurs professionnels, les passionnés d'agriculture,
+							les étudiants en agronomie, et toute personne souhaitant en apprendre davantage sur les pratiques
+							agricoles modernes et durables.
+						</p>
+						<p>
+							Objectifs du Site :
+
+								Atténuer la rareté des denrées de première nécessité : Fournir une plateforme pour faciliter l'accès aux produits agricoles essentiels.
+
+								Résoudre les problèmes dans l'agriculture guinéenne : Identifier et proposer des solutions aux défis rencontrés par les agriculteurs.
+
+								Faciliter l'évacuation et la vente des produits cultivés : Mettre en place des fonctionnalités permettant aux agriculteurs de commercialiser leurs produits plus efficacement.
+
+						</p>
+					</p>
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+
+		<!-- Team Members -->
+		<div class="team-members-box">  
+			<h2>Notre Equipe</h2>
+			<div class="row">
+				<div class="col-lg-4 mb-4">
+				  <div class="card h-100 text-center">
+					<img class="card-img-top" src="{% static 'Agronomie/images/team_01.jpg' %}" alt="" />
+					<div class="card-body">
+						<h4 class="card-title">Team Member</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
+					</div>
+					<div class="card-footer">
+						<ul>
+							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+						</ul>
+					</div>
+				  </div>
+				</div>
+				<div class="col-lg-4 mb-4">
+				  <div class="card h-100 text-center">
+					<img class="card-img-top" src="{% static 'Agronomie/images/team_02.jpg' %}" alt="" />
+					<div class="card-body">
+						<h4 class="card-title">Team Member</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
+					</div>
+					<div class="card-footer">
+						<ul>
+							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+						</ul>
+					</div>
+				  </div>
+				</div>
+				<div class="col-lg-4 mb-4">
+				  <div class="card h-100 text-center">
+					<img class="card-img-top" src="{% static 'Agronomie/images/team_03.jpg' %}" alt="" />
+					<div class="card-body">
+						<h4 class="card-title">Team Member</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
+					</div>
+					<div class="card-footer">
+						<ul>
+							<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
+						</ul>
+					</div>
+				  </div>
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- Our Customers -->
+		<div class="customers-box"> 
+			<h2>Nos Partenaires</h2>
+			<div class="row">
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="{% static 'Agronomie/images/logo_01.png' %}" alt="" />
+				</div>
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="images/logo_02.png" alt="" />
+				</div>
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="images/logo_03.png" alt="" />
+				</div>
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="images/logo_04.png" alt="" />
+				</div>
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="images/logo_05.png" alt="" />
+				</div>
+				<div class="col-lg-2 col-sm-4 mb-4">
+				  <img class="img-fluid" src="images/logo_06.png" alt="" />
+				</div>
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container -->
+	</div>
+
+    <!--footer starts from here-->
+   {% endblock %}

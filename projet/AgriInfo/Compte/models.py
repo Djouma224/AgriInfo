@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from Agronomie.models import Actualite
 
 class Utilisateur(AbstractUser):
     token = models.CharField(max_length=120)
@@ -9,7 +10,7 @@ class Utilisateur(AbstractUser):
         ("utilisateur","utilisateur")
     ]
     telephone=models.CharField(max_length=15)
-    profile=models.ImageField(upload_to="profile")
+    profile=models.ImageField(upload_to="profile",blank=True,null=True)
     roles=models.CharField(max_length=150,choices=role)
     password_confirm=models.CharField(max_length=150)
 
@@ -20,6 +21,7 @@ class Commentaire(models.Model):
     auteur=models.ForeignKey(Utilisateur,on_delete=models.CASCADE)
     date_commentaire=models.DateTimeField(auto_now=True)
     contenue=models.TextField()
+    actualite=models.ForeignKey(Actualite,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.auteur.username

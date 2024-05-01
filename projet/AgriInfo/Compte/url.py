@@ -8,5 +8,9 @@ urlpatterns = [
     path('logout',deconnexion,name='logout'),
     path('password_reset',password_reset, name='password_reset'),
     path('password/<str:token>',password, name='password'),
-    path('profile',profile, name='profile'),
+    path('profil',profile, name='profil'),
+    path('change_password',change_password,name='change_password'),
+    path('modifier_profil',modifie_profil, name='modifier_profil'),
+    path('voir_commentaires/<int:id_actu>',voir_commentaires, name='voir_commentaires'),
+
 ]

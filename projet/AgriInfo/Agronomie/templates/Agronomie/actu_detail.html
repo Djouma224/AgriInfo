@@ -1,0 +1,202 @@
+
+{% extends "Agronomie/base.html" %}
+{% load static %}
+{% block title %} Agriculture{% endblock  %}
+
+{% block navbar %}
+	
+<ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link active" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="services.html">Forums</a>
+   </li>
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+
+{% endblock  %}
+	<!-- full Title -->
+	{% block content %}
+	
+	<div class="full-title">
+		<div class="container">
+			<!-- Page Heading/Breadcrumbs -->
+			<h1 class="mt-4 mb-3">Blog Home One
+				<small>Subheading</small>
+			</h1>
+		</div>
+	</div>
+
+    <!-- Page Content -->
+    <div class="container">
+
+		<!-- <div id="info-succes"  class="alert alert-danger alert-dismissible fade show" style="position: absolute;margin-top: 15px; z-index: 1000;max-width: 330px;">            
+			<em style="color: red; ">
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+				juste une information
+			</em> 
+		</div>  -->
+
+		<!-- <div class="breadcrumb-main">
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item">
+					<a href="index.html">Home</a>
+				</li>
+				<li class="breadcrumb-item active">Blog Home 1</li>
+			</ol>
+		</div> -->
+
+		<div class="row">
+			<!-- Blog Entries Column -->
+			<div class="col-md-8 offset-md-2 blog-entries mt-3">
+			  <!-- Blog Post -->
+			  
+			  <div class="card mb-4">
+				<div class="card-header">
+					<div class="d-flex" style="align-items: center;">
+						<div>
+							<img class="img-fluid mr-2" src="{{detail.auteur.profile.url}}" alt="" style="width: 50px; height: 50px; border-radius: 150px; border: 1px solid black;">
+						</div>
+						<div>
+							<strong>{{detail.auteur.username}}</strong><em> | {{detail.auteur.roles}}</em>
+							<div><small>{{detail.date_pub}}</small></div>
+						</div>
+					
+					</div>
+				</div>
+					<div class="d-flex justify-content-center">
+						<img style="min-width: 50%; max-height: 50%;" class="img-fluid" src="{{detail.media.url}}" alt="Card image Blog" />
+					</div>
+					<!-- <div>
+						<img class="card-img-top" src="{{actus.media.url}}" alt="Card image Blog" />
+					</div> -->
+					<div class="card-body">
+						<h2 class="card-title">{{detail.titre}}</h2>
+						<p class="card-text">{{detail.contenu}}</p>
+						<a href="{% url 'actu' %}" class="btn btn-primary">Retour &rarr;</a>
+						<button type="button" class="btn ml-3" data-toggle="modal" data-target="#Modal"><i class="fa fa-comment"></i> Commenter</i></button>
+						<a href="{% url 'voir_commentaires' detail.id %}" class="btn btn-danger ml-3"><i class="fa fa-eye"></i> voir</i></a>
+					</div>
+					<!-- start comment -->
+					<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered">
+						  <div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Commentaire</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+								<form action="" method="post" enctype="multipart/form-data">
+									{% csrf_token %}
+									<textarea class="form-control mb-3" name="contenue" id="" cols="15" rows="5" placeholder="Saisisser votre commentaire ici ..."></textarea>
+									<div class="modal-footer d-flex justify-content-center">
+										<button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</button>
+										<button type="submit" class="btn btn-success">Commenter</button>
+									</div>
+								</form>
+								</div>
+								
+						  </div>
+						</div>
+					</div>
+					<!-- end comment -->
+					
+					
+			  </div>
+
+			  
+
+				<div class="pagination_bar_arrow">
+				  <!-- Pagination -->
+					<ul class="pagination justify-content-center mb-4">
+						<li class="page-item">
+							<a class="page-link" href="#">&larr; Older</a>
+						</li>
+						<li class="page-item disabled">
+							<a class="page-link" href="#">Newer &rarr;</a>
+						</li>
+					</ul>
+				</div>
+
+			</div>
+
+			<!-- Sidebar Widgets Column -->
+			
+
+		</div>
+		<!-- /.row -->
+
+    </div>
+	
+	{% endblock  %}
+    <!-- /.container -->
+
+    <!--footer starts from here-->
+

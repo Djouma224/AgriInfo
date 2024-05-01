@@ -1,0 +1,53 @@
+{% load static %}
+{% include "Agronomie/header.html" %}
+	
+	<!-- full Title -->
+	
+
+    
+    
+    <!-- /.container -->
+
+    <div class="container">
+      <center>
+        <form class="d-flex mt-3 m-4" style="max-width: 600px;" method="get" action="{% url 'search_culture'%}">
+          <input class="form-control mr-2" type="search" placeholder="Saisisser ici ..." aria-label="Search" name="search">
+          <button class="btn btn-outline-success" type="submit">Rechercher</button>
+        </form>
+      </center>
+  
+	   
+   
+      <div class="row">
+        {% for cultures in culture %}
+        
+        <div class="col-lg-4 col-sm-6 portfolio-item">
+          <div class="card h-100 shadow">
+            <h6 class="ml-3 mt-3 h4">{{cultures.categorie_culture.nom_categorie}}</h6>
+            <img class="card-img-top" src="{{cultures.image.url}}" alt="" />
+            <div class="card-body">
+              <h4 class="card-title">
+                <a href="#">{{cultures.nom_culture}}</a>
+              </h4>
+              <p class="card-text">{{cultures.description_culture |truncatewords:15}}</p>
+              <a class="btn btn-success sm" href="{% url 'detail_culture' cultures.id %}">voir plus</a>     
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <h4>
+          La culture Rechercher n'existe pas pour le moment veuillez Rechercher une autre
+        </h4>
+        {% endfor %}
+
+        
+        
+      </div>
+    
+
+	
+
+    </div>
+
+    <!--footer starts from here-->
+   {% include "Agronomie/footer.html" %}

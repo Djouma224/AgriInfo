@@ -1,0 +1,124 @@
+{% extends 'Agronomie/base.html' %}
+{% load static %}
+{% block title %}calendrier{% endblock  %}
+
+{% block navbar %}
+    <ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link active" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	<li class="nav-item">
+	  <a class="nav-link" href="services.html">Forums</a>
+   </li>
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+{% endblock  %}
+
+
+
+{% block content %}
+<div class="m-4">
+    <div class="text-center mb-3">
+        <h3>CALENDRIER AGRICOLE GUINÉENNE</h3>
+        <em>Planification des activités argricoles pour les cultures saisonières en Guinée</em>
+    </div>
+    <hr>
+    <form class="d-flex m-3" method="get" action="{% url 'search_calendrier' %}" style="max-width: 700px;">
+        <input class="form-control mr-2" type="search" aria-label="Search" placeholder="Culture" name="culture">
+        <input type="search" class="form-control" placeholder="Localités" name="localite">
+        <select name="ville" id="">
+            {% for ville in villes %}           
+            <option value="{{ ville.id }}" class="form-control">{{ ville.ville }}</option>
+            {% endfor %}
+        </select>
+        <button class="btn btn-outline-success" type="submit">Rechercher</button>
+      </form>
+    <table class="table table-hover table-bordered">
+        <thead class="bg-success">
+            <tr class="text-white text-center">
+                <th>Villes</th>
+                <th>Localités</th>
+                <th>Cultures</th>
+                <th>Date debut</th>
+                <th>Date recolte</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for calendrier in calendriers %}
+            <tr>
+                <td>{{ calendrier.endroit.ville }}</td>
+                <td>{{ calendrier.endroit.nom_endroit }}</td>
+                <td>{{ calendrier.culture.nom_culture }}</td>
+                <td>{{ calendrier.date_debut }}</td>
+                <td>{{ calendrier.date_fin }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock  %}

@@ -1,0 +1,91 @@
+{% load static %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-light top-nav fixed-top shadow">
+      <!-- <div class="collapse navbar-collapse" style="position: absolute;right: 30px;top: 5px;">
+         <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+      </div> -->
+
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+            <img src="{% static 'Agronomie/images/logo.png' %}" alt="logo" />
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="fas fa-bars"></span>
+            </button>
+      
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+               <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                     <a class="nav-link active" href="{% url 'home' %}">Accueil</a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+                  </li>
+
+                  <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cultures
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                       <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+                       <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+   
+                    </div>
+                 </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="services.html">Calendrier</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="services.html">Forums</a>
+                 </li>
+                  
+                  <li class="nav-item">
+                    <a class="nav-link" href="services.html">A propos</a>
+                 </li>
+                  <li class="nav-item">
+                     <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                  </li>
+                  {% if user.is_authenticated %}
+                  {% comment %} <li class="nav-item">
+                     <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+                  </li> {% endcomment %}
+                  <li class="nav-item dropdown">
+                     <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                       {% if user.profile %}
+                        <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+                        {% else %}
+                        <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+                        {% endif %}
+                        
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                        <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+                        <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+            
+                     </div>
+                  </li>
+                  <!-- <li class="nav-item">
+                     <div style="">
+                        <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+                     </div>
+               
+                  </li> -->
+                  {% else %}
+                  <li class="nav-item dropdown">
+                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     Connexion
+                     </a>
+                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                        <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+                        <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+            
+                     </div>
+                  </li>
+
+                  {% endif %}
+                
+                 
+               </ul>
+            </div>
+        </div>
+    </nav>

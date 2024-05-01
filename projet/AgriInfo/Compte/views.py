@@ -4,8 +4,9 @@ import secrets
 from AgriInfo import settings
 from .models import *
 from django.core.mail import EmailMessage
-from django.contrib.auth import login,logout ,authenticate
+from django.contrib.auth import login,logout ,authenticate,update_session_auth_hash
 from django.contrib.auth.hashers import check_password
+from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
 import random
 def contact(request):
@@ -121,7 +122,8 @@ def password(request,token):
         return render(request,'Compte/login.html',{'errors':errors})
     return render(request,'Compte/password.html',{'info':info})
 
-def profile(request):
+@login_required(login_url='login')
+def change_password(request):
     errors = ""
     info = ""
     user = request.user
@@ -130,17 +132,83 @@ def profile(request):
         nouveau = request.POST.get('Nouveau_password')
         confirme = request.POST.get('confirmer_passsword')
         if not user.check_password(ancien):
-            errors = f"le mot entré est erronné"
-            return render(request,'Compte/profile.html',{'errors':errors})
+            errors = f"l'ancien mot de passe est incorrect"
+            return render(request,'Compte/change_password.html',{'errors':errors})
         if len(nouveau) < 4:
             errors = f"le mot de passe doit avoir au moins 4 caractères"
-            return render(request,'Compte/profile.html',{'errors':errors})
+            return render(request,'Compte/change_password.html',{'errors':errors})
         if nouveau != confirme:
-            errors = f"les mots de passes ne sont pas conformes"
-            return render(request,'Compte/profile.html',{'errors':errors})
+            errors = f"le nouveau mot de passe n'est pas conformes"
+            return render(request,'Compte/change_password.html',{'errors':errors})
         user.set_password(nouveau)
         user.save()
-        info = "Votre a été modifié avec succès"
-        return render(request,'Compte/profile.html',{'info':info})
-    return render(request,'Compte/profile.html',{"user":user})
+        update_session_auth_hash(request,user)
+        info = f"Votre mot de passe a été modifié avec succès"
+    return render(request,'Compte/change_password.html',{'info':info,"user":user})
 
+@login_required(login_url='login')
+def profile(request):
+  
+    user = request.user
+    
+    return render(request,'Compte/profil.html',{"user":user})
+
+
+def modifie_profil(request):
+    info = ""
+    user = request.user
+    # user_profil = Utilisateur.objects.get(user = user)
+
+    if request.method == 'POST':
+        # username = request.POST.get('username')
+        fullname = request.POST.get('fullName')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        profil = request.FILES.get('profile_picture')
+        # new = Utilisateur.objects.update(
+        #     # username = username,
+        #     last_name = fullname,
+        #     email = email,
+        #     telephone = phone,
+        #     profile = profil
+            
+        # )
+        user.last_name = fullname
+        user.email = email
+        user.telephone = phone
+        image_actuel = user.profile
+        if profil:
+            user.profile = profil
+        else:
+            user.profile = image_actuel
+        user.save()
+        info = f"Mofication effectuée avec succès !!!"
+        
+       
+        
+        
+        return render(request,'Compte/modifier_profil.html',{'user':user,'info':info})
+        
+    return render(request,'Compte/modifier_profil.html',{'user':user,'info':info})
+
+def voir_commentaires(request,id_actu):
+    user = request.user
+    actualite = Actualite.objects.prefetch_related('commentaire_set').get(id=id_actu)
+    actu = Actualite.objects.get(id=id_actu)
+    comments=Commentaire.objects.filter(actualite=actu)
+    if request.method == 'POST':
+        contenue = request.POST.get('contenue')
+        new = Commentaire.objects.create(
+            auteur = user,
+            actualite = actu,
+            contenue = contenue
+        )
+        new.save()
+        context={'commentaires':actualite,
+                'comments':comments,
+                'actu':actu}
+        return render(request,'Compte/commentaire.html',context)
+
+    context={'commentaires':actualite,
+    'comments':comments}
+    return render(request,'Compte/commentaire.html',context)
