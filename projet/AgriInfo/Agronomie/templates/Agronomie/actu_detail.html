@@ -26,9 +26,11 @@
 	<li class="nav-item">
 	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="services.html">Forums</a>
-   </li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
 	
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
@@ -140,7 +142,7 @@
 						<p class="card-text">{{detail.contenu}}</p>
 						<a href="{% url 'actu' %}" class="btn btn-primary">Retour &rarr;</a>
 						<button type="button" class="btn ml-3" data-toggle="modal" data-target="#Modal"><i class="fa fa-comment"></i> Commenter</i></button>
-						<a href="{% url 'voir_commentaires' detail.id %}" class="btn btn-danger ml-3"><i class="fa fa-eye"></i> voir</i></a>
+						<a href="{% url 'voir_commentaires' detail.id %}" class="btn btn-danger ml-3"><i class="fa fa-eye mr-1"></i>voir<span>({{ nb_comment }})</span></a>
 					</div>
 					<!-- start comment -->
 					<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

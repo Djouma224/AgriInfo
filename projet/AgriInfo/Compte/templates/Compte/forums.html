@@ -1,0 +1,127 @@
+{% extends "Agronomie/base.html" %}
+{% load static %}
+{% block title %}Forum{% endblock  %}
+
+{% block navbar %}
+	
+<ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+
+{% endblock  %}
+	<!-- full Title -->
+{% block content %}
+<!-- start -->
+
+<div class="bg-success pt-4">
+	<h2 class="d-block text-center">Les forums disponibles</h2>
+	<div class="pt-2 px-4 d-flex justify-content-center" style=" height: 550px;">
+		
+		<div style="width: 700px;">
+			<div class="d-flex justify-content-center mb-5">
+				<form class="d-flex mt-3" style="max-width: 600px;" method="get" action=".">
+					<input class="form-control mr-2" type="search" placeholder="Rechercher un groupe..." aria-label="Search" name="search">
+					<button class="btn btn-outline-ligth" type="submit">Rechercher</button>
+				</form>
+	
+			</div>
+
+			{% for forum in forums %}
+			<div class="d-flex bg-white ml-3 mt-2 justify-content-between px-2" style="border-radius: 15px; align-items: center;">
+				<div class="">
+					<div class="d-flex">
+						{% if forum.logo %}
+							<img src="{{ forum.user_create.profile.url }}" alt="" class="p-1" style="width: 50px; height: 50px; border-radius: 50px;">
+						{% else %}
+							<img src="{% static 'Compte/img/groupe.png' %}" alt="" class="p-1" style="width: 50px; height: 50px; border-radius: 50px;">
+						{% endif %}
+						
+						<div>
+							<h3 style="font-size: 1.3rem; line-height: 1;">{{forum.titre_forum}}</h3>
+							<p style="line-height: 1px;">{{ forum.description_forum |truncatechars:40 }}</p>
+						</div>
+					</div>
+				</div>
+				<div style="display: flex; align-items: end;">
+					<a href="{% url 'forum' forum.id %}" class="btn text-white" style="border-radius: 15px; background-color:teal; font-weight: bold;">Joindre</a>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+
+    
+{% endblock %}

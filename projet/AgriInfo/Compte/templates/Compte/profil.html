@@ -25,8 +25,11 @@
 	<li class="nav-item">
 	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="services.html">Forums</a>
+	{% if user.is_authenticated %}
+		<li class="nav-item">
+			<a class="nav-link" href="{% url 'forums' %}">Forums</a>
+		</li>
+   {% endif %}
    </li>
 	
 	<li class="nav-item">

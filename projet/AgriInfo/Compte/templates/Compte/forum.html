@@ -1,0 +1,185 @@
+{% extends "Agronomie/base.html" %}
+{% load static %}
+{% block title %}Forum{% endblock  %}
+
+{% block navbar %}
+	
+<ul class="navbar-nav ml-auto">
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+	</li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'actu' %}">Actualites</a>
+	</li>
+
+	<li class="nav-item dropdown">
+	  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	  Cultures
+	  </a>
+	  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		 <a class="dropdown-item" href="{% url 'culture' %}">Informations cultures</a>
+		 <a class="dropdown-item" href="{% url 'technique_culture' %}">Techniques cultures</a>
+
+	  </div>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
+	</li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
+	
+	<li class="nav-item">
+	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
+   </li>
+	<li class="nav-item">
+	   <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+	</li>
+	{% if user.is_authenticated %}
+	{% comment %} <li class="nav-item">
+	   <a class="nav-link" href="{% url 'logout' %}">Deconnexion</a>
+	</li> {% endcomment %}
+	<li class="nav-item dropdown">
+	   <a class="" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		 {% if user.profile %}
+		  <img src="{{ user.profile.url }}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+		  {% else %}
+		  <img src="{%  static 'Compte/img/prog.png' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px; border:1px solid black">
+
+		  {% endif %}
+		  
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'profil' %}">profile</a>
+		  <a class="dropdown-item" href="{% url 'logout' %}">Deconnexion</a>
+
+	   </div>
+	</li>
+	<!-- <li class="nav-item">
+	   <div style="">
+		  <img src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" style="width: 40px; height: 40px; padding: none;border-radius: 25px;">
+	   </div>
+ 
+	</li> -->
+	{% else %}
+	<li class="nav-item dropdown">
+	   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	   Connexion
+	   </a>
+	   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+		  <a class="dropdown-item" href="{% url 'login' %}">se connecter</a>
+		  <a class="dropdown-item" href="{% url 'signup' %}">s'inscrire</a>
+
+	   </div>
+	</li>
+
+	{% endif %}
+  
+   
+ </ul>
+
+{% endblock  %}
+	<!-- full Title -->
+{% block content %}
+<!-- start -->
+    
+<div class="bg-success">
+	<div class="d-flex justify-content-center text-white">
+		<h2>{{ room.name }}</h2>
+	</div>
+	
+	<div class="d-flex justify-content-center pt-5">
+		<div class="bg-white p-3" id="chat-messages" style="overflow: scroll; width: 500px; height: 300px;border-radius: 10px;">
+			
+			{% for message in messages %}
+			<div class="d-flex">
+				<img src="{{ message.user.profile.url }}" alt="" style="width: 40px; height: 40px; border-radius: 100px; margin-right: 3px;">
+				<div class="p-2 mb-3 w-100" style="background-color: rgb(219, 217, 217);border-radius: 10px;">
+					<p style="font-weight: bold;line-height: 1px;padding-top:2px;">{{ message.user.username }}</p>
+					<p class="mb-0">{{ message.content }}</p>
+						<img src="{{ message.image.url }}" class="" alt="Fichier joint">   
+					<div class="d-flex justify-content-end">
+						<small class="text-muted text-rigth" id="date">{{ message.date_added }}</small>
+					</div>
+				</div>
+			</div>
+		
+			{% endfor %}
+	
+		</div>
+	</div>
+	
+	<div class="d-flex justify-content-center">
+		<div class="p-2 mt-3 bg-white" style="width: 500px; border-radius: 10px;">
+			<form method="post" action="" class="d-flex" enctype="multipart/form-data">
+				{% csrf_token %}
+				<input class="d-block" type="text" id="chat-message-input" name="content" placeholder="Votre message" style="width: 100%;border: none;">
+				<button id="chat-message-submit" class="btn btn-success">Envoyer</button>
+			</form>
+		</div>
+	</div>
+</div>
+
+    
+{% endblock %}
+
+{% block script %}
+{{ titre_forum.id|json_script:"json-roomname" }}
+{{ request.user.username|json_script:"json-username" }}
+{{ request.user.profile.url|json_script:"json-profile-picture" }}
+
+    <script>
+        
+
+		document.addEventListener('DOMContentLoaded', function () {
+		const roomName = JSON.parse(document.getElementById('json-titre-forumname').textContent);
+		const userName = JSON.parse(document.getElementById('json-username').textContent);
+		const userProfilePicture = JSON.parse(document.getElementById('json-profile-picture').textContent);
+
+		const chatSocket = new WebSocket(
+			'ws://'
+			+ window.location.host
+			+ '/ws/'
+			+ roomName + '/'
+		);
+
+		chatSocket.onmessage = function (e) {
+			const data = JSON.parse(e.data);
+			if (data.message) {
+				let html = '<div class="d-flex">';
+				html += '<img src="' + userProfilePicture + '" alt="" style="width: 40px; height: 40px; border-radius: 100px; margin-right: 3px;">';
+				html += '<div class="p-2 mb-3 w-100" style="background-color: rgb(219, 217, 217);border-radius: 10px;">';
+				html += '<p style="font-weight: bold;line-height: 1px;padding-top:2px;">' + data.username + '</p>';
+				html += '<p class="mb-0">' + data.message + '</p>';
+
+				html += '<div class="d-flex justify-content-end">';
+				html += '<small class="text-muted text-rigth" id="date">' + data.date_added + '</small></div></div></div>';
+				document.querySelector('#chat-messages').innerHTML += html;
+			} else {
+				alert('Le message était vide ! ');
+			}
+		};
+
+		chatSocket.onclose = function (e) {
+			console.log('La connexion WebSocket est fermée.');
+		};
+
+		document.querySelector('#chat-message-submit').onclick = function (e) {
+			e.preventDefault();
+			const messageInputDom = document.querySelector('#chat-message-input');
+			const message = messageInputDom.value;
+		
+				chatSocket.send(JSON.stringify({
+					'message': message,
+					'username': userName,
+					'user_profile_picture': userProfilePicture,
+					'room': roomName,
+				}));
+			
+			messageInputDom.value = '';
+		};
+	});
+</script>
+{% endblock %}

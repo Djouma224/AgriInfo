@@ -26,9 +26,11 @@
 	<li class="nav-item">
 	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="services.html">Forums</a>
-   </li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
 	
 	<li class="nav-item">
 	  <a class="nav-link active" href="{% url 'apropos' %}">A propos</a>
@@ -103,7 +105,8 @@
 		<div class="about-main">
 			<div class="row">
 				<div class="col-lg-6">
-					<img class="img-fluid rounded mb-4" src="{% static 'Agronomie/images/about-img.jpg' %}" alt="" />
+					<img class="img-fluid rounded mb-4 shadow-lg" src="{% static 'Agronomie/images/riz3.jpg' %}" alt="" />
+					<h2 class="h1" style="color: black; position: absolute; bottom: 50px; left: 100px; font-size: 4em;"><span style="color: red;">Agri</span><span style="color: rgb(201, 199, 38);">Info</span><span style="color: green;">224</span></h2>
 				</div>
 				<div class="col-lg-6">
 					<h2>A propos d'AgriInfo224</h2>
@@ -139,11 +142,11 @@
 			<h2>Notre Equipe</h2>
 			<div class="row">
 				<div class="col-lg-4 mb-4">
-				  <div class="card h-100 text-center">
-					<img class="card-img-top" src="{% static 'Agronomie/images/team_01.jpg' %}" alt="" />
+				  <div class="card h-100 text-center" style="box-shadow: 0 0 3px 4px rgb(8, 255, 8);">
+					<img class="card-img-top" src="{% static 'Agronomie/images/djouma.jpg' %}" alt="" />
 					<div class="card-body">
-						<h4 class="card-title">Team Member</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<h4 class="card-title">Djouma Barry</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Administrateur</h6>
 						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
 					</div>
 					<div class="card-footer">
@@ -156,11 +159,11 @@
 				  </div>
 				</div>
 				<div class="col-lg-4 mb-4">
-				  <div class="card h-100 text-center">
-					<img class="card-img-top" src="{% static 'Agronomie/images/team_02.jpg' %}" alt="" />
+				  <div class="card h-100 text-center" style="box-shadow: 0 0 3px 4px rgb(8, 255, 8);">
+					<img class="card-img-top" src="{% static 'Agronomie/images/pablo.png' %}" alt="" />
 					<div class="card-body">
-						<h4 class="card-title">Team Member</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<h4 class="card-title">Pablo Escobar</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Agriculteur</h6>
 						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
 					</div>
 					<div class="card-footer">
@@ -173,11 +176,11 @@
 				  </div>
 				</div>
 				<div class="col-lg-4 mb-4">
-				  <div class="card h-100 text-center">
-					<img class="card-img-top" src="{% static 'Agronomie/images/team_03.jpg' %}" alt="" />
+				  <div class="card h-100 text-center" style="box-shadow: 0 0 3px 4px rgb(8, 255, 8);">
+					<img class="card-img-top" src="{% static 'Agronomie/images/celeste.png' %}" alt="" />
 					<div class="card-body">
-						<h4 class="card-title">Team Member</h4>
-						<h6 class="card-subtitle mb-2 text-muted">Position</h6>
+						<h4 class="card-title">Celestin</h4>
+						<h6 class="card-subtitle mb-2 text-muted">Administrateur</h6>
 						<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus aut mollitia eum ipsum fugiat odio officiis odit.</p>
 					</div>
 					<div class="card-footer">

@@ -9,6 +9,7 @@ from django.contrib.auth.hashers import check_password
 from django.contrib.auth.decorators import login_required
 # from django.contrib.auth.models import User
 import random
+# page de contact
 def contact(request):
     if request.method =='POST':
         nom=request.POST.get('nom')
@@ -90,6 +91,10 @@ def password_reset(request):
     errors=""
     if request.method == 'POST':
         email = request.POST.get('email')
+        if email=="":
+            errors="Veuillez entrer votre mail pour recuper le mot de passe"
+            return render(request,'Compte/password_reset.html',{'info':info,'errors':errors})
+
         user = Utilisateur.objects.filter(email=email)
         if user:
             token = user[0].token
@@ -184,11 +189,7 @@ def modifie_profil(request):
         user.save()
         info = f"Mofication effectuée avec succès !!!"
         
-       
-        
-        
-        return render(request,'Compte/modifier_profil.html',{'user':user,'info':info})
-        
+        return render(request,'Compte/modifier_profil.html',{'user':user,'info':info})       
     return render(request,'Compte/modifier_profil.html',{'user':user,'info':info})
 
 def voir_commentaires(request,id_actu):
@@ -196,6 +197,7 @@ def voir_commentaires(request,id_actu):
     actualite = Actualite.objects.prefetch_related('commentaire_set').get(id=id_actu)
     actu = Actualite.objects.get(id=id_actu)
     comments=Commentaire.objects.filter(actualite=actu)
+    nb_comment=comments.count()
     if request.method == 'POST':
         contenue = request.POST.get('contenue')
         new = Commentaire.objects.create(
@@ -206,9 +208,29 @@ def voir_commentaires(request,id_actu):
         new.save()
         context={'commentaires':actualite,
                 'comments':comments,
-                'actu':actu}
+                'actu':actu,
+                'nb_comment':nb_comment}
         return render(request,'Compte/commentaire.html',context)
 
     context={'commentaires':actualite,
-    'comments':comments}
+    'comments':comments,
+    'nb_comment':nb_comment}
     return render(request,'Compte/commentaire.html',context)
+
+# groupe furums
+def forums(request):
+    forums=Forum.objects.all()
+    context={'forums':forums}
+    return render(request,'Compte/forums.html',context)
+
+def forum(request,id_forum):
+    forum = Forum.objects.get(id=id_forum)
+    messages=Message_forum.objects.filter(forum=forum)
+    context={'forum':forum,
+             'messages':messages}
+    return render(request,'Compte/forum.html',context)
+
+
+    
+
+

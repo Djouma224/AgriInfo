@@ -12,5 +12,8 @@ urlpatterns = [
     path('change_password',change_password,name='change_password'),
     path('modifier_profil',modifie_profil, name='modifier_profil'),
     path('voir_commentaires/<int:id_actu>',voir_commentaires, name='voir_commentaires'),
+    path('forums',forums,name="forums"),
+    path('forum/<int:id_forum>',forum,name="forum"),
+
 
 ]

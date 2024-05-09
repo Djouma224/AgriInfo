@@ -24,9 +24,11 @@
 	<li class="nav-item">
 	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="services.html">Forums</a>
-   </li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
 	
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
@@ -94,13 +96,19 @@
     <!-- Page Content -->
     <div class="container">
 		<div class="breadcrumb-main">
-		
+			<center>
+				<form class="d-flex mt-3" style="max-width: 600px;" method="get" action="{% url 'search_culture'%}">
+				  <input class="form-control mr-2" type="search" placeholder="Saisisser ici ..." aria-label="Search" name="search">
+				  <button class="btn btn-outline-success" type="submit">Rechercher</button>
+				</form>
+			  </center>
 	  </div>
 
     <center>
       <div class="mt-5">
         <h3>Actuces pour les techniques de culture</h3>
       </div>
+	  <p>Toutes les actuces et techniques pour faire vous donner un bon rendement dans votre culture</p>
     </center>
 
       <div class="row mt-5">

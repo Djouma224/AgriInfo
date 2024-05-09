@@ -25,9 +25,11 @@
 	<li class="nav-item">
 	   <a class="nav-link" href="{% url 'calendrier' %}">Calendrier</a>
 	</li>
-	<li class="nav-item">
-	  <a class="nav-link" href="services.html">Forums</a>
-   </li>
+	{% if user.is_authenticated %}
+   <li class="nav-item">
+      <a class="nav-link" href="{% url 'forums' %}">Forums</a>
+    </li>
+   {% endif %}
 	
 	<li class="nav-item">
 	  <a class="nav-link" href="{% url 'apropos' %}">A propos</a>
@@ -91,21 +93,21 @@
        </ol>
        <div class="carousel-inner" role="listbox">
           <!-- Slide One - Set the background image for this slide in the line below -->
-          <div class="carousel-item active" style="background-image: url('{% static 'Agronomie/images/riz.jpg' %}')">
+          <div class="carousel-item active" style="background-image: url('{% static 'Agronomie/images/riz.jpg' %}')" data-aos="zoom-in">
              <div class="carousel-caption d-none d-md-block">
                 <h3>" Celui qui sème avec abondance récoltera avec abondance." </h3>
                 <p>" L'agriculture est l'art de transformer le soleil, la pluie et le sol en richesse. "</p>
              </div>
           </div>
           <!-- Slide Two - Set the background image for this slide in the line below -->
-          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/riz2.jpg' %}')">
+          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/riz2.jpg' %}')" data-aos="zoom-in">
              <div class="carousel-caption d-none d-md-block">
                 <h3>" L'agriculture est une entreprise où l'on sème le temps pour récolter l'avenir."</h3>
                 <p>" L'agriculture n'est pas seulement le métier qui donne le pain, c'est aussi le métier qui donne l'espoir. "</p>
              </div>
           </div>
           <!-- Slide Three - Set the background image for this slide in the line below -->
-          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/slider-03.jpg' %}')">
+          <div class="carousel-item" style="background-image: url('{% static 'Agronomie/images/slider-03.jpg' %}')" data-aos="zoom-in">
              <div class="carousel-caption d-none d-md-block">
                 <h3>" L'agriculture est notre passeport pour l'avenir, car la nourriture est l'unité fondamentale de la vie. "</h3>
                 <p>" La terre est le grand livre de l'humanité, l'agriculture en est la lecture. "</p>

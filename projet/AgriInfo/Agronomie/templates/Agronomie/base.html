@@ -14,6 +14,8 @@
 	<link href="{% static 'Agronomie/css/all.css' %}" rel="stylesheet">
 	<!-- Custom styles for this template -->
 	<link href="{% static 'Agronomie/css/style.css' %}" rel="stylesheet">
+    <!-- Aos -->
+    <link rel="stylesheet" href="{% static 'Agronomie/aos-master/dist/aos.css' %}">
    <style>
    
    </style>
@@ -105,7 +107,18 @@
         message.style.display = 'none';
     },500)
 </script> -->
+
+
+
+{% block script %}
+  
+{% endblock %}
+
 <script src="{% static 'Agronomie/vendor/jquery/jquery.min.js' %}"></script>
 <script src="{% static 'Agronomie/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'Agronomie/aos-master/dist/aos.js' %}"></script>
+<script>
+    AOS.init()
+</script>
 </body>
 </html>
